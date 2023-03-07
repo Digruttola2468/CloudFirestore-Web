@@ -1,20 +1,44 @@
 import { db } from './firebase.js';
-import { collection, getDocs, query } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
-const q = query(collection(db, "turnos"));
+const divContainerDatos = document.querySelector(".listaDatos");
 
-const ulListaDatos = document.querySelector(".listaDatos");
+export function addDocumentHtml( dato ) {
+  const containerItem = document.createElement("div");
+  containerItem.classList.add("itemDatos");
+  containerItem.classList.add(dato.id);
+  containerItem.innerHTML = 
+  `
+  <span>
+  <b>Nombre: </b> ${dato.data().nombre}  
+  <b>Apellido: </b> ${dato.data().last} 
+  <b>Fecha: </b> ${dato.data().fecha} 
+  <b>Hora: </b> ${dato.data().hora} 
+  </span>
+  `;
+  
 
-const querySnapshot = await getDocs(q);
-querySnapshot.forEach((doc) => {
+  const btnEleminar = document.createElement("button");
+  btnEleminar.innerHTML = '<i class="fa fa-trash"></i>';
+  const btnModificar = document.createElement("button");
+  btnModificar.innerHTML = '<i class="fa fa-pen">';
 
-  const liItem = document.createElement("LI");
-  liItem.innerHTML = `
-  <b>Nombre: </b> ${doc.data().nombre}  
-  <b>Apellido: </b> ${doc.data().last} 
-  <b>Fecha: </b> ${doc.data().fecha} 
-  <b>Hora: </b> ${doc.data().hora} `;
-  ulListaDatos.appendChild(liItem);
+  containerItem.appendChild(btnModificar);
+  containerItem.appendChild(btnEleminar);
 
-  console.log(doc.id, " => ", doc.data().born);
-});
+  divContainerDatos.appendChild(containerItem);
+
+  btnEleminar.addEventListener('click', async e => {
+    try {
+      await deleteDoc(doc(db, "turnos", containerItem.classList[1]));
+      containerItem.classList.add("ocultar");
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  btnModificar.addEventListener('click', e => {
+    console.log("Modificando: " + containerItem.classList[1]);
+  });
+} 
+
+
