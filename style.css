@@ -1,0 +1,62 @@
+* {
+    font-family: Courier, monospace;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+.ocultar {
+    display: none;
+}
+
+#formAgregar {
+    display: grid;
+    grid-template-columns: 150px 150px ;
+    grid-template-rows: 30px 30px 30px;
+    gap: 7px;
+    place-content: center;
+}
+#btnAgregar {
+    grid-column: 1 / 3;
+    border-radius: 5px;
+    outline: 1px solid black;
+    border: none;
+    background-color: white;
+}
+
+#btnAgregar:hover {
+    background: rgb(214, 214, 214);
+    transition: background 1s;
+}
+
+.ReadTurnosSeccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.itemDatos {
+    border: 1px solid black;
+    margin-bottom: 7px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.itemDatos:hover {
+    background-color: aquamarine;
+    transition: background .7s;
+}
+
+
+.fa-trash {
+    color: red;
+}
+.fa-pen {
+    color: balck;
+}
